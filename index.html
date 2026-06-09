@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Euge Estética — Tecnología Corporal | Córdoba</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --charcoal: #2A2A34;
+      --graphite: #4A4A58;
+      --rosegold:  #C4857A;
+      --blush:    #F0D8D5;
+      --cream:    #FAF7F5;
+      --warm:     #F5F0EC;
+      --white:    #FFFFFF;
+      --radius:   12px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Georgia', serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.7;
+    }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    nav {
+      position: fixed; top: 0; left: 0; width: 100%;
+      background: rgba(250,247,245,0.97);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+      border-bottom: 1px solid var(--blush);
+    }
+    .nav-logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--charcoal);
+    }
+    .nav-sub { font-family: 'Arial', sans-serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rosegold); display: block; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-family: 'Arial', sans-serif; font-size: 0.82rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--charcoal); transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--rosegold); }
+    .nav-cta {
+      background: var(--charcoal) !important; color: var(--white) !important;
+      padding: 0.5rem 1.2rem; border-radius: 40px;
+    }
+    .nav-cta:hover { background: var(--rosegold) !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 24px; height: 2px; background: var(--charcoal); border-radius: 2px; }
+
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      background:
+        linear-gradient(160deg, rgba(250,247,245,0.90) 0%, rgba(196,133,122,0.30) 100%),
+        url('https://images.unsplash.com/photo-1638202993928-7267aad84c31?w=1600&q=80') center/cover no-repeat;
+    }
+    .hero-tag {
+      font-family: 'Arial', sans-serif; font-size: 0.72rem;
+      letter-spacing: 0.38em; text-transform: uppercase;
+      color: var(--rosegold); margin-bottom: 1.4rem;
+    }
+    .hero h1 {
+      font-size: clamp(3rem, 10vw, 7rem);
+      font-weight: 700; letter-spacing: 0.1em;
+      color: var(--charcoal); line-height: 1; margin-bottom: 0.6rem;
+    }
+    .hero-tagline {
+      font-family: 'Arial', sans-serif; font-size: 0.78rem;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--rosegold); margin-bottom: 1.5rem;
+    }
+    .hero-sub {
+      font-size: 1.1rem; color: var(--charcoal); opacity: 0.72;
+      max-width: 510px; margin: 0 auto 2.5rem;
+    }
+    .btn {
+      display: inline-block; padding: 0.85rem 2.2rem; border-radius: 40px;
+      font-family: 'Arial', sans-serif; font-size: 0.82rem;
+      letter-spacing: 0.14em; text-transform: uppercase; transition: all 0.2s;
+    }
+    .btn-primary { background: var(--charcoal); color: var(--white); }
+    .btn-primary:hover { background: var(--rosegold); transform: translateY(-2px); }
+    .btn-outline { border: 1.5px solid var(--charcoal); color: var(--charcoal); margin-left: 1rem; }
+    .btn-outline:hover { background: var(--charcoal); color: var(--white); transform: translateY(-2px); }
+    .hero-badge {
+      margin-top: 3rem;
+      display: inline-flex; align-items: center; gap: 0.7rem;
+      background: var(--white); padding: 0.65rem 1.4rem; border-radius: 40px;
+      font-family: 'Arial', sans-serif; font-size: 0.82rem; color: var(--charcoal);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    .stars { color: #C9803A; letter-spacing: 2px; }
+
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-family: 'Arial', sans-serif; font-size: 0.7rem;
+      letter-spacing: 0.32em; text-transform: uppercase;
+      color: var(--rosegold); margin-bottom: 0.8rem;
+    }
+    .section-title { font-size: clamp(1.8rem, 4vw, 2.8rem); color: var(--charcoal); margin-bottom: 1.2rem; line-height: 1.2; }
+    .section-intro { font-size: 1rem; color: var(--charcoal); opacity: 0.7; max-width: 540px; margin-bottom: 3.5rem; }
+
+    /* Tecnología banner */
+    .tech-banner {
+      background: var(--charcoal); color: var(--cream);
+      padding: 3.5rem 2rem; text-align: center;
+    }
+    .tech-tags {
+      display: flex; flex-wrap: wrap; gap: 0.8rem;
+      justify-content: center; margin-bottom: 1.5rem;
+    }
+    .tech-tag {
+      background: rgba(196,133,122,0.2);
+      border: 1px solid var(--rosegold);
+      color: var(--blush);
+      font-family: 'Arial', sans-serif; font-size: 0.72rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.3rem 0.9rem; border-radius: 40px;
+    }
+    .tech-banner h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); color: var(--blush); margin-bottom: 0.8rem; }
+    .tech-banner p { max-width: 520px; margin: 0 auto; opacity: 0.75; }
+
+    #servicios { background: var(--white); }
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+    .service-card {
+      background: var(--warm); border-radius: var(--radius);
+      padding: 2rem 1.8rem; border: 1px solid var(--blush);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(196,133,122,0.12); }
+    .service-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .service-card h3 { font-size: 1.1rem; color: var(--charcoal); margin-bottom: 0.5rem; }
+    .service-card p { font-size: 0.9rem; color: var(--graphite); opacity: 0.82; }
+
+    #nosotros { background: var(--blush); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .about-img { border-radius: var(--radius); overflow: hidden; aspect-ratio: 4/5; }
+    .about-img img { width: 100%; height: 100%; object-fit: cover; }
+    .about-text p { margin-bottom: 1rem; opacity: 0.8; }
+    .about-stat { display: flex; gap: 2.5rem; margin-top: 2rem; }
+    .stat-box { text-align: left; }
+    .stat-num { font-size: 2.4rem; font-weight: 700; color: var(--charcoal); line-height: 1; }
+    .stat-label { font-family: 'Arial', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.6; }
+
+    #reseñas { background: var(--graphite); color: var(--cream); }
+    #reseñas .section-title { color: var(--cream); }
+    #reseñas .section-intro { color: var(--blush); }
+    .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+    .review-card {
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(240,216,213,0.2);
+      border-radius: var(--radius); padding: 1.8rem;
+    }
+    .review-stars { color: #C9803A; font-size: 1rem; letter-spacing: 2px; margin-bottom: 1rem; }
+    .review-text { font-size: 0.92rem; opacity: 0.85; margin-bottom: 1.2rem; font-style: italic; }
+    .review-author { font-family: 'Arial', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.45; }
+    .reviews-cta { text-align: center; margin-top: 3rem; }
+    .reviews-cta p { opacity: 0.6; margin-bottom: 1rem; font-family: 'Arial', sans-serif; font-size: 0.85rem; }
+
+    #contacto { background: var(--cream); }
+    .contact-grid { max-width: 560px; }
+    .contact-info p { opacity: 0.75; margin-bottom: 2rem; }
+    .contact-item { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.4rem; }
+    .contact-icon { font-size: 1.3rem; margin-top: 2px; }
+    .contact-item strong { display: block; font-size: 0.75rem; font-family: 'Arial', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rosegold); margin-bottom: 2px; }
+    .contact-item span { font-size: 0.95rem; }
+
+    .wa-float {
+      position: fixed; bottom: 1.8rem; right: 1.8rem;
+      background: #25D366; color: white; width: 56px; height: 56px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.45); z-index: 200; transition: transform 0.2s;
+    }
+    .wa-float:hover { transform: scale(1.1); }
+
+    footer {
+      background: var(--charcoal); color: var(--blush);
+      padding: 2.5rem 2rem; text-align: center;
+    }
+    .footer-logo { font-size: 1.5rem; letter-spacing: 0.15em; color: var(--cream); margin-bottom: 0.5rem; font-weight: 700; }
+    footer p { font-family: 'Arial', sans-serif; font-size: 0.78rem; opacity: 0.45; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .nav-links.open {
+        display: flex; flex-direction: column;
+        position: absolute; top: 64px; left: 0; width: 100%;
+        background: var(--cream); padding: 1.5rem 2rem;
+        border-bottom: 1px solid var(--blush); gap: 1.2rem;
+      }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-img { aspect-ratio: 16/9; }
+      .btn-outline { margin-left: 0; margin-top: 0.8rem; }
+    }
+
+    /* ── Scroll Reveal ── */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── Nav scrolled ── */
+    nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.12); }
+
+    /* ── WhatsApp pulse ── */
+    @keyframes wa-pulse {
+      0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.45), 0 0 0 0 rgba(37,211,102,0.4); }
+      60%       { box-shadow: 0 4px 20px rgba(37,211,102,0.45), 0 0 0 13px rgba(37,211,102,0); }
+    }
+    .wa-float { animation: wa-pulse 2.8s ease infinite; }
+    .wa-float:hover { animation: none; transform: scale(1.1); }
+
+    /* ── Mapa ── */
+    .map-section { padding: 0; }
+    .map-section iframe { width: 100%; height: 380px; border: 0; display: block; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div>
+    <div class="nav-logo">Euge Estética</div>
+    <span class="nav-sub">Tecnología corporal avanzada</span>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#tecnologia">Tecnología</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#reseñas">Reseñas</a></li>
+    <li><a href="#contacto" class="nav-cta">Reservar turno</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<section class="hero" id="inicio">
+  <div>
+    <p class="hero-tag">Estética Avanzada · Güemes, Córdoba</p>
+    <h1>Euge Estética</h1>
+    <p class="hero-tagline">Tecnología corporal de última generación</p>
+    <p class="hero-sub">Criolipólisis, ultrasonido, presoterapia, drenaje linfático y mesoterapia sin agujas. Resultados reales con la tecnología más avanzada.</p>
+    <div>
+      <a href="#contacto" class="btn btn-primary">Reservar turno</a>
+      <a href="#servicios" class="btn btn-outline">Ver servicios</a>
+    </div>
+    <div class="hero-badge">
+      <span class="stars">★★★★½</span>
+      <strong>4.8 estrellas · 38 reseñas en Google</strong>
+    </div>
+  </div>
+</section>
+
+<div class="tech-banner" id="tecnologia">
+  <h2>Equipamiento de última generación</h2>
+  <div class="tech-tags">
+    <span class="tech-tag">Criolipólisis</span>
+    <span class="tech-tag">Ultrasonido</span>
+    <span class="tech-tag">Presoterapia</span>
+    <span class="tech-tag">Drenaje Linfático</span>
+    <span class="tech-tag">Electroporación</span>
+    <span class="tech-tag">Mesoterapia sin agujas</span>
+  </div>
+  <p>Cada tratamiento está diseñado con tecnología seleccionada para resultados seguros, efectivos y visibles.</p>
+</div>
+
+<section id="servicios">
+  <div class="container">
+    <p class="section-label">Lo que hacemos</p>
+    <h2 class="section-title">Nuestros servicios</h2>
+    <p class="section-intro">Estética corporal y facial con equipamiento avanzado y técnica especializada para que logres los resultados que buscás.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">❄️</div>
+        <h3>Criolipólisis</h3>
+        <p>Reducción de grasa localizada por frío controlado. No invasiva, segura y con resultados comprobables en pocas sesiones.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">〰️</div>
+        <h3>Ultrasonido Focalizado</h3>
+        <p>Tecnología de ondas ultrasónicas para reducción de celulitis y tejido adiposo. Resultados visibles y progresivos.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🌊</div>
+        <h3>Presoterapia</h3>
+        <p>Drenaje y estimulación circulatoria mediante presión neumática. Ideal para retención de líquidos y pesadez de piernas.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">💫</div>
+        <h3>Drenaje Linfático</h3>
+        <p>Técnica manual y/o mecánica para activar el sistema linfático. Reduce inflamación, toxinas y mejora la circulación.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">✨</div>
+        <h3>Mesoterapia sin Agujas</h3>
+        <p>Electroporación para introducir principios activos en la piel sin punciones. Anti-celulitis, hidratación y firming.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">💆</div>
+        <h3>Estética Facial</h3>
+        <p>Limpieza profunda, electroporación facial y tratamientos a medida para mejorar luminosidad y textura de piel.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="nosotros">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img">
+        <img
+          src="https://images.unsplash.com/photo-1612817288484-6f916006741a?w=800&q=80"
+          alt="Equipamiento Euge Estética"
+          loading="lazy"
+        />
+      </div>
+      <div class="about-text">
+        <p class="section-label">Quiénes somos</p>
+        <h2 class="section-title">Resultados reales con tecnología de punta</h2>
+        <p>En Euge Estética combinamos equipamiento de última generación con técnica especializada para ofrecerte resultados que realmente se ven. Cada tratamiento está estudiado para maximizar los efectos en el menor tiempo posible.</p>
+        <p>Atendemos en Güemes con turnos flexibles y atención completamente personalizada para tus objetivos.</p>
+        <div class="about-stat">
+          <div class="stat-box">
+            <div class="stat-num">38</div>
+            <div class="stat-label">Reseñas en Google</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">4.8</div>
+            <div class="stat-label">Estrellas promedio</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">6+</div>
+            <div class="stat-label">Tecnologías activas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="reseñas">
+  <div class="container">
+    <p class="section-label">Lo que dicen nuestras clientas</p>
+    <h2 class="section-title">38 reseñas · 4.8 estrellas</h2>
+    <p class="section-intro">Resultados reales confirmados por nuestras clientas.</p>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Hice criolipólisis y los resultados fueron increíbles. Muy profesional, me explicó todo antes y el equipamiento es de primera calidad. Totalmente recomendada."</p>
+        <div class="review-author">— Karina S.</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"La presoterapia fue maravillosa. Llegué con piernas muy pesadas y salí sintiéndome liviana. El lugar es muy lindo y la atención muy personalizada."</p>
+        <div class="review-author">— Natalia G.</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★½</div>
+        <p class="review-text">"Hice drenaje linfático post-operatorio y el resultado fue fantástico. Muy prolija, cuidadosa y conocedora. Sin dudas vuelvo."</p>
+        <div class="review-author">— Paola R.</div>
+      </div>
+    </div>
+    <div class="reviews-cta">
+      <p>¿Ya fuiste? Contanos tu experiencia.</p>
+      <a
+        href="https://www.google.com/maps/place/Euge+Est%C3%A9tica/@-31.4186162,-64.1910545,17z"
+        target="_blank"
+        class="btn btn-primary"
+      >Ver todas las reseñas en Google</a>
+    </div>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <p class="section-label">Contacto</p>
+        <h2 class="section-title">Reservá tu turno</h2>
+        <p>Escribinos y te asesoramos sobre qué tecnología es la más indicada para tus objetivos.</p>
+        <div class="contact-item">
+          <span class="contact-icon">📍</span>
+          <div>
+            <strong>Dirección</strong>
+            <span>Ayacucho 349, Güemes, Córdoba</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon">📞</span>
+          <div>
+            <strong>Teléfono</strong>
+            <span><a href="tel:+5403512203896" style="color: var(--charcoal);">0351 220-3896</a></span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon">🕐</span>
+          <div>
+            <strong>Horarios</strong>
+            <span>Lunes a viernes: 9:00 – 20:00<br>Sábados: 9:00 – 14:00</span>
+          </div>
+        </div>
+        <div style="margin-top: 2rem;">
+          <a
+            href="https://wa.me/5493512203896?text=Hola!%20Quisiera%20consultar%20por%20un%20turno%20en%20Euge%20Est%C3%A9tica"
+            target="_blank"
+            class="btn btn-primary"
+          >💬 Escribir por WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- MAPA -->
+<section class="map-section">
+  <iframe
+    src="https://maps.google.com/maps?q=Ayacucho+349+C%C3%B3rdoba+Argentina&output=embed&z=16"
+    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+    title="Ubicacion Euge Estetica"></iframe>
+</section>
+
+<footer>
+  <div class="footer-logo">Euge Estética</div>
+  <p>Ayacucho 349 · Güemes · Córdoba Capital</p>
+  <p style="margin-top: 0.5rem;">© 2024 Euge Estética · Todos los derechos reservados</p>
+</footer>
+
+<a
+  class="wa-float"
+  href="https://wa.me/5493512203896?text=Hola!%20Quisiera%20consultar%20por%20un%20turno"
+  target="_blank"
+  title="Escribinos por WhatsApp"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="white">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.116 1.524 5.849L.057 23.885a.5.5 0 0 0 .608.633l6.193-1.623A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.813 9.813 0 0 1-5.032-1.383l-.36-.214-3.733.979.997-3.645-.236-.373A9.818 9.818 0 0 1 2.182 12c0-5.413 4.405-9.818 9.818-9.818 5.413 0 9.818 4.405 9.818 9.818 0 5.413-4.405 9.818-9.818 9.818z"/>
+  </svg>
+</a>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+
+  const _nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => _nav.classList.toggle('scrolled', window.scrollY > 50), { passive: true });
+
+  const _obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); _obs.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+  document.querySelectorAll('.service-card, .review-card, .about-text, .about-img, .contact-item, .stat-box, .section-title, .section-intro, .hero-badge').forEach((el, i) => {
+    el.classList.add('reveal');
+    el.style.transitionDelay = (i % 3) * 0.08 + 's';
+    _obs.observe(el);
+  });
+
+  function _count(el) {
+    const txt = el.textContent.trim();
+    const num = parseFloat(txt);
+    if (!num) return;
+    const suf = txt.replace(/[\d.]/g, '');
+    const isF = txt.includes('.');
+    let cur = 0;
+    const t = setInterval(() => {
+      cur = Math.min(cur + num / 60, num);
+      el.textContent = (isF ? cur.toFixed(1) : Math.floor(cur)) + suf;
+      if (cur >= num) clearInterval(t);
+    }, 25);
+  }
+  const _cobs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting && !e.target._d) { e.target._d = true; _count(e.target); } });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.stat-num').forEach(el => _cobs.observe(el));
+</script>
+</body>
+</html>
